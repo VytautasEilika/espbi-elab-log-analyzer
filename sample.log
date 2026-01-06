@@ -1,0 +1,24 @@
+[2025-12-23 10:29:00] production.INFO: REQ-694a52cccb223 __________________ START ___________________  
+[2025-12-23 10:29:00] production.INFO: REQ-694a52cccb223 Request URL: /api/users/123
+[2025-12-23 10:29:00] production.DEBUG: REQ-694a52cccb223 Database query: SELECT * FROM users WHERE id = 123
+[2025-12-23 10:29:01] production.INFO: REQ-694a52cccb223 User found: john.doe@example.com
+[2025-12-23 10:29:01] production.INFO: REQ-694a52cccb223 __________________ END ___________________
+[2025-12-23 10:29:05] production.INFO: REQ-8f3b21a4d5c67 __________________ START ___________________
+[2025-12-23 10:29:05] production.INFO: REQ-8f3b21a4d5c67 Request URL: /api/orders/create
+[2025-12-23 10:29:05] production.DEBUG: REQ-8f3b21a4d5c67 Validating order data
+[2025-12-23 10:29:06] production.WARN: REQ-8f3b21a4d5c67 Product stock low: product_456
+[2025-12-23 10:29:06] production.INFO: REQ-8f3b21a4d5c67 Order created: ORD-789
+[2025-12-23 10:29:06] production.INFO: REQ-8f3b21a4d5c67 __________________ END ___________________
+[2025-12-23 10:29:10] production.INFO: REQ-c2d4e6f8a0b12 __________________ START ___________________
+[2025-12-23 10:29:10] production.INFO: REQ-c2d4e6f8a0b12 Request URL: /api/payment/process
+[2025-12-23 10:29:10] production.DEBUG: REQ-c2d4e6f8a0b12 Connecting to payment gateway
+[2025-12-23 10:29:12] production.ERROR: REQ-c2d4e6f8a0b12 Payment gateway timeout
+[2025-12-23 10:29:12] production.ERROR: REQ-c2d4e6f8a0b12 Stack trace: at PaymentService.process (payment.js:45)
+[2025-12-23 10:29:12] production.WARN: REQ-c2d4e6f8a0b12 Retrying payment (attempt 1 of 3)
+[2025-12-23 10:29:15] production.INFO: REQ-c2d4e6f8a0b12 Payment successful: TXN-12345
+[2025-12-23 10:29:15] production.INFO: REQ-c2d4e6f8a0b12 __________________ END ___________________
+[2025-12-23 10:29:20] staging.INFO: REQ-1a2b3c4d5e6f7 __________________ START ___________________
+[2025-12-23 10:29:20] staging.INFO: REQ-1a2b3c4d5e6f7 Request URL: /api/test/endpoint
+[2025-12-23 10:29:20] staging.DEBUG: REQ-1a2b3c4d5e6f7 Testing new feature
+[2025-12-23 10:29:21] staging.INFO: REQ-1a2b3c4d5e6f7 Test completed successfully
+[2025-12-23 10:29:21] staging.INFO: REQ-1a2b3c4d5e6f7 __________________ END ___________________
