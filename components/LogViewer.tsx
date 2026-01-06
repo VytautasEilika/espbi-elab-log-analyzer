@@ -272,9 +272,10 @@ export default function LogViewer({ logData, fileName, onReset }: LogViewerProps
         startTime,
         endTime,
         durationMs,
-        hasErrors,
+        hasErrors: hasErrors || (responseStatus !== undefined && responseStatus >= 400),
         hasWarnings,
         environment,
+        responseStatus,
         responseErrorBody,
         url,
       };
