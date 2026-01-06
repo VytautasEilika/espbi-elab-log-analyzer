@@ -30,6 +30,7 @@ interface RequestGroup {
   environment?: string;
   responseStatus?: number;
   responseErrorBody?: string;
+  url?: string;
 }
 
 export default function LogViewer({ logData, fileName, onReset }: LogViewerProps) {
@@ -232,6 +233,28 @@ export default function LogViewer({ logData, fileName, onReset }: LogViewerProps
         }
       }
 
+      // Extract URL from ">>> METHOD URL" pattern
+      let url: string | undefined;
+      const requestEntry = entries.find(e => {
+        const cleaned = e.content.replace(/^\[?\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}\]?\s*/, '')
+          .replace(/^\w+\.(ERROR|WARN|INFO|DEBUG):\s*/, '')
+          .replace(/^REQ-[a-zA-Z0-9]+\s*/, '')
+          .trim();
+        return cleaned.startsWith('>>>');
+      });
+
+      if (requestEntry) {
+         const cleaned = requestEntry.content.replace(/^\[?\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}\]?\s*/, '')
+          .replace(/^\w+\.(ERROR|WARN|INFO|DEBUG):\s*/, '')
+          .replace(/^REQ-[a-zA-Z0-9]+\s*/, '')
+          .trim();
+         
+         const match = cleaned.match(/^>>>\s+(?:POST|GET|PUT|DELETE|PATCH)\s+(\S+)/);
+         if (match) {
+             url = match[1];
+         }
+      }
+
       const startTime = timestamps[0];
       const endTime = timestamps[timestamps.length - 1];
       
@@ -252,8 +275,8 @@ export default function LogViewer({ logData, fileName, onReset }: LogViewerProps
         hasErrors,
         hasWarnings,
         environment,
-        responseStatus,
         responseErrorBody,
+        url,
       };
     }).sort((a, b) => {
       // Sort by start time, most recent first

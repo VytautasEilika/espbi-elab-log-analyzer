@@ -22,6 +22,7 @@ interface RequestGroup {
   environment?: string;
   responseStatus?: number;
   responseErrorBody?: string;
+  url?: string;
 }
 
 interface RequestListProps {
@@ -43,7 +44,8 @@ export default function RequestList({
   const filteredRequests = useMemo(() => {
     return requests.filter(request => {
       const matchesSearch = searchTerm === '' || 
-        request.requestId.toLowerCase().includes(searchTerm.toLowerCase());
+        request.requestId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (request.url && request.url.toLowerCase().includes(searchTerm.toLowerCase()));
       
       const matchesEnv = environmentFilter === 'ALL' || 
         request.environment === environmentFilter;
@@ -133,9 +135,16 @@ export default function RequestList({
           >
             <div className="flex items-start justify-between gap-4 mb-4">
               <div className="flex-1">
-                <h3 className="text-xl font-bold text-white mb-2 font-mono">
-                  {request.requestId}
-                </h3>
+                <div className="flex items-center gap-3 mb-2">
+                  <h3 className="text-xl font-bold text-white font-mono">
+                    {request.requestId}
+                  </h3>
+                  {request.url && (
+                    <span className="text-sm font-mono text-gray-400 bg-gray-900/50 px-2 py-0.5 rounded border border-gray-700/50 break-all">
+                      {request.url}
+                    </span>
+                  )}
+                </div>
                 {request.environment && (
                   <span className="inline-block px-3 py-1 bg-purple-600 text-white text-xs font-semibold rounded-full mr-2">
                     {request.environment}
