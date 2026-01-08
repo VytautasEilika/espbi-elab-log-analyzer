@@ -1,40 +1,21 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-
-interface LogEntry {
-  lineNumber: number;
-  content: string;
-  level?: 'ERROR' | 'WARN' | 'INFO' | 'DEBUG';
-  timestamp?: string;
-  requestId?: string;
-  environment?: string;
-}
-
-interface RequestGroup {
-  requestId: string;
-  entries: LogEntry[];
-  startTime?: string;
-  endTime?: string;
-  durationMs?: number;
-  hasErrors: boolean;
-  hasWarnings: boolean;
-  environment?: string;
-}
+import { 
+  LogEntry, 
+  RequestGroup, 
+  cleanLogContent, 
+  formatDuration, 
+  formatJSON, 
+  getLevelColor,
+  formatXML,
+  getHttpStatusColor
+} from '@/lib/log-parser';
 
 interface RequestDetailProps {
   request: RequestGroup;
   onBack: () => void;
 }
-
-const formatJSON = (jsonString: string): string => {
-  try {
-    const parsed = JSON.parse(jsonString);
-    return JSON.stringify(parsed, null, 2);
-  } catch (e) {
-    return jsonString;
-  }
-};
 
 const getMethodColor = (method: string) => {
   switch (method.toUpperCase()) {
@@ -120,18 +101,6 @@ const LogEntryRow = ({ entry, getLevelColor, cleanLogContent, duration }: {
 
   const isSpecialEntry = incomingMatch || outgoingMatch || cacheMatch || saveSessionMatch || saveCacheMatch || cacheMissMatch || statusMatch || statusJsonMatch || contentTypeMatch || headersMatch || responseHeadersMatch || requestBodyMatch || responseBodyMatch || returnMatch || extStartMatch || extUrlMatch || extEndMatch || xmlMatch || bareJsonMatch || requestXmlMatch;
 
-  // Helper to format XML
-  const formatXML = (xml: string) => {
-    let formatted = '';
-    let indent = 0;
-    const tab = '  ';
-    xml.split(/>\s*</).forEach(function(node) {
-        if (node.match( /^\/\w/ )) indent -= 1;
-        formatted += new Array(indent + 1).join(tab) + '<' + node + '>\r\n';
-        if (node.match( /^<?\w[^>]*[^\/]$/ )) indent += 1;
-    });
-    return formatted.substring(1, formatted.length-3);
-  };
 
   // Helper to handle JSON/XML visualization
   const renderBody = (content: string, type: 'json' | 'xml', previewLines = 10) => {
@@ -191,13 +160,6 @@ const LogEntryRow = ({ entry, getLevelColor, cleanLogContent, duration }: {
     );
   };
 
-  const getStatusColor = (code: string) => {
-    const status = parseInt(code);
-    if (status >= 200 && status < 300) return 'text-green-400 bg-green-900/30 border-green-700';
-    if (status >= 300 && status < 400) return 'text-yellow-400 bg-yellow-900/30 border-yellow-700';
-    if (status >= 400) return 'text-red-400 bg-red-900/30 border-red-700';
-    return 'text-gray-400 bg-gray-900/30 border-gray-700';
-  };
 
   return (
     <div className={`flex border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors ${getLevelColor(entry.level)}`}>
@@ -247,7 +209,7 @@ const LogEntryRow = ({ entry, getLevelColor, cleanLogContent, duration }: {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
                     </svg>
                   </div>
-                  <span className={`px-2 py-0.5 rounded border text-xs font-bold ${getStatusColor(returnMatch[1])}`}>
+                  <span className={`px-2 py-0.5 rounded border text-xs font-bold ${getHttpStatusColor(parseInt(returnMatch[1]))}`}>
                     {returnMatch[1]}
                   </span>
                 </>
@@ -333,7 +295,7 @@ const LogEntryRow = ({ entry, getLevelColor, cleanLogContent, duration }: {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <span className={`px-2 py-0.5 rounded border text-xs font-bold ${getStatusColor(statusMatch[1])}`}>
+                  <span className={`px-2 py-0.5 rounded border text-xs font-bold ${getHttpStatusColor(parseInt(statusMatch[1]))}`}>
                     StatusCode: {statusMatch[1]}
                   </span>
                 </>
@@ -349,7 +311,7 @@ const LogEntryRow = ({ entry, getLevelColor, cleanLogContent, duration }: {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <span className={`px-2 py-0.5 rounded border text-xs font-bold ${getStatusColor(statusJsonMatch[1])}`}>
+                  <span className={`px-2 py-0.5 rounded border text-xs font-bold ${getHttpStatusColor(parseInt(statusJsonMatch[1]))}`}>
                     StatusCode: {statusJsonMatch[1]}
                   </span>
                 </>
@@ -566,44 +528,7 @@ const LogEntryRow = ({ entry, getLevelColor, cleanLogContent, duration }: {
 };
 
 export default function RequestDetail({ request, onBack }: RequestDetailProps) {
-  const getLevelColor = (level?: string) => {
-    switch (level) {
-      case 'ERROR': return 'text-red-400 bg-red-900/30';
-      case 'WARN': return 'text-yellow-400 bg-yellow-900/30';
-      case 'INFO': return 'text-blue-400 bg-blue-900/30';
-      case 'DEBUG': return 'text-gray-400 bg-gray-800/30';
-      default: return 'text-gray-300 bg-gray-800/20';
-    }
-  };
 
-  const formatDuration = (durationMs?: number): string => {
-    if (durationMs === undefined || durationMs === null) return 'N/A';
-    
-    if (durationMs < 1000) {
-      return `${durationMs}ms`;
-    } else if (durationMs < 60000) {
-      return `${(durationMs / 1000).toFixed(2)}s`;
-    } else {
-      const minutes = Math.floor(durationMs / 60000);
-      const seconds = ((durationMs % 60000) / 1000).toFixed(0);
-      return `${minutes}m ${seconds}s`;
-    }
-  };
-
-  const cleanLogContent = (content: string): string => {
-    let cleaned = content;
-    
-    // Remove timestamp [YYYY-MM-DD HH:MM:SS]
-    cleaned = cleaned.replace(/^\[?\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}\]?\s*/, '');
-    
-    // Remove environment.LEVEL: pattern (e.g., "production.INFO: ")
-    cleaned = cleaned.replace(/^\w+\.(ERROR|WARN|INFO|DEBUG):\s*/, '');
-    
-    // Remove request ID (e.g., "REQ-xxxxx ")
-    cleaned = cleaned.replace(/^REQ-[a-zA-Z0-9]+\s*/, '');
-    
-    return cleaned.trim();
-  };
 
   // Calculate durations for external requests
   const externalDurations = useMemo(() => {

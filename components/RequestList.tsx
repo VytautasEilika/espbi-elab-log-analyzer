@@ -1,29 +1,12 @@
 'use client';
 
 import { useMemo } from 'react';
-
-interface LogEntry {
-  lineNumber: number;
-  content: string;
-  level?: 'ERROR' | 'WARN' | 'INFO' | 'DEBUG';
-  timestamp?: string;
-  requestId?: string;
-  environment?: string;
-}
-
-interface RequestGroup {
-  requestId: string;
-  entries: LogEntry[];
-  startTime?: string;
-  endTime?: string;
-  durationMs?: number;
-  hasErrors: boolean;
-  hasWarnings: boolean;
-  environment?: string;
-  responseStatus?: number;
-  responseErrorBody?: string;
-  url?: string;
-}
+import { 
+  LogEntry, 
+  RequestGroup, 
+  formatDuration, 
+  formatJSON 
+} from '@/lib/log-parser';
 
 interface RequestListProps {
   requests: RequestGroup[];
@@ -91,29 +74,6 @@ export default function RequestList({
         SUCCESS
       </span>
     );
-  };
-
-  const formatJSON = (jsonString: string): string => {
-    try {
-      const parsed = JSON.parse(jsonString);
-      return JSON.stringify(parsed, null, 2);
-    } catch (e) {
-      return jsonString;
-    }
-  };
-
-  const formatDuration = (durationMs?: number): string => {
-    if (durationMs === undefined || durationMs === null) return 'N/A';
-    
-    if (durationMs < 1000) {
-      return `${durationMs}ms`;
-    } else if (durationMs < 60000) {
-      return `${(durationMs / 1000).toFixed(2)}s`;
-    } else {
-      const minutes = Math.floor(durationMs / 60000);
-      const seconds = ((durationMs % 60000) / 1000).toFixed(0);
-      return `${minutes}m ${seconds}s`;
-    }
   };
 
   return (

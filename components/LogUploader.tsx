@@ -129,6 +129,7 @@ export default function LogUploader({ onFileLoaded }: LogUploaderProps) {
               </span>
               <input
                 id="file-upload"
+                data-testid="log-input"
                 type="file"
                 className="hidden"
                 accept=".log,.txt"
