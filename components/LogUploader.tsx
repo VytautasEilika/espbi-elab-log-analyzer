@@ -13,7 +13,6 @@ export default function LogUploader({ onFileLoaded }: LogUploaderProps) {
 
   const handleFile = useCallback(async (file: File) => {
     if (!file) return;
-
     setIsLoading(true);
     setProgress(0);
 
@@ -90,7 +89,7 @@ export default function LogUploader({ onFileLoaded }: LogUploaderProps) {
         `}
       >
         {isLoading ? (
-          <div className="space-y-4">
+          <div className="space-y-4" data-testid="loading-state">
             <div className="animate-spin rounded-full h-16 w-16 border-4 border-purple-500 border-t-transparent mx-auto"></div>
             <p className="text-white text-xl font-semibold">Loading file...</p>
             <div className="w-full bg-gray-700 rounded-full h-3 overflow-hidden">

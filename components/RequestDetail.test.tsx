@@ -43,7 +43,7 @@ describe('RequestDetail', () => {
     const onBack = vi.fn();
     render(<RequestDetail request={mockRequest} onBack={onBack} />);
     
-    const backButton = screen.getByText(/Back to Requests/i);
+    const backButton = screen.getByTestId('back-button');
     fireEvent.click(backButton);
     expect(onBack).toHaveBeenCalled();
   });
