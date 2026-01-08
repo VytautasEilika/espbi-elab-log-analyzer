@@ -1,0 +1,247 @@
+{
+  "summary": {
+    "errors": 2,
+    "warnings": 2,
+    "infos": 16,
+    "debugs": 4,
+    "total": 24
+  },
+  "requests": [
+    {
+      "requestId": "REQ-1a2b3c4d5e6f7",
+      "entries": [
+        {
+          "lineNumber": 20,
+          "content": "[2025-12-23 10:29:20] staging.INFO: REQ-1a2b3c4d5e6f7 __________________ START ___________________",
+          "level": "INFO",
+          "timestamp": "2025-12-23 10:29:20",
+          "requestId": "REQ-1a2b3c4d5e6f7",
+          "environment": "staging"
+        },
+        {
+          "lineNumber": 21,
+          "content": "[2025-12-23 10:29:20] staging.INFO: REQ-1a2b3c4d5e6f7 Request URL: /api/test/endpoint",
+          "level": "INFO",
+          "timestamp": "2025-12-23 10:29:20",
+          "requestId": "REQ-1a2b3c4d5e6f7",
+          "environment": "staging"
+        },
+        {
+          "lineNumber": 22,
+          "content": "[2025-12-23 10:29:20] staging.DEBUG: REQ-1a2b3c4d5e6f7 Testing new feature",
+          "level": "DEBUG",
+          "timestamp": "2025-12-23 10:29:20",
+          "requestId": "REQ-1a2b3c4d5e6f7",
+          "environment": "staging"
+        },
+        {
+          "lineNumber": 23,
+          "content": "[2025-12-23 10:29:21] staging.INFO: REQ-1a2b3c4d5e6f7 Test completed successfully",
+          "level": "INFO",
+          "timestamp": "2025-12-23 10:29:21",
+          "requestId": "REQ-1a2b3c4d5e6f7",
+          "environment": "staging"
+        },
+        {
+          "lineNumber": 24,
+          "content": "[2025-12-23 10:29:21] staging.INFO: REQ-1a2b3c4d5e6f7 __________________ END ___________________\n",
+          "level": "INFO",
+          "timestamp": "2025-12-23 10:29:21",
+          "requestId": "REQ-1a2b3c4d5e6f7",
+          "environment": "staging"
+        }
+      ],
+      "startTime": "2025-12-23 10:29:20",
+      "endTime": "2025-12-23 10:29:21",
+      "durationMs": 1000,
+      "hasErrors": false,
+      "hasWarnings": false,
+      "environment": "staging"
+    },
+    {
+      "requestId": "REQ-c2d4e6f8a0b12",
+      "entries": [
+        {
+          "lineNumber": 12,
+          "content": "[2025-12-23 10:29:10] production.INFO: REQ-c2d4e6f8a0b12 __________________ START ___________________",
+          "level": "INFO",
+          "timestamp": "2025-12-23 10:29:10",
+          "requestId": "REQ-c2d4e6f8a0b12",
+          "environment": "production"
+        },
+        {
+          "lineNumber": 13,
+          "content": "[2025-12-23 10:29:10] production.INFO: REQ-c2d4e6f8a0b12 Request URL: /api/payment/process",
+          "level": "INFO",
+          "timestamp": "2025-12-23 10:29:10",
+          "requestId": "REQ-c2d4e6f8a0b12",
+          "environment": "production"
+        },
+        {
+          "lineNumber": 14,
+          "content": "[2025-12-23 10:29:10] production.DEBUG: REQ-c2d4e6f8a0b12 Connecting to payment gateway",
+          "level": "DEBUG",
+          "timestamp": "2025-12-23 10:29:10",
+          "requestId": "REQ-c2d4e6f8a0b12",
+          "environment": "production"
+        },
+        {
+          "lineNumber": 15,
+          "content": "[2025-12-23 10:29:12] production.ERROR: REQ-c2d4e6f8a0b12 Payment gateway timeout",
+          "level": "ERROR",
+          "timestamp": "2025-12-23 10:29:12",
+          "requestId": "REQ-c2d4e6f8a0b12",
+          "environment": "production"
+        },
+        {
+          "lineNumber": 16,
+          "content": "[2025-12-23 10:29:12] production.ERROR: REQ-c2d4e6f8a0b12 Stack trace: at PaymentService.process (payment.js:45)",
+          "level": "ERROR",
+          "timestamp": "2025-12-23 10:29:12",
+          "requestId": "REQ-c2d4e6f8a0b12",
+          "environment": "production"
+        },
+        {
+          "lineNumber": 17,
+          "content": "[2025-12-23 10:29:12] production.WARN: REQ-c2d4e6f8a0b12 Retrying payment (attempt 1 of 3)",
+          "level": "WARN",
+          "timestamp": "2025-12-23 10:29:12",
+          "requestId": "REQ-c2d4e6f8a0b12",
+          "environment": "production"
+        },
+        {
+          "lineNumber": 18,
+          "content": "[2025-12-23 10:29:15] production.INFO: REQ-c2d4e6f8a0b12 Payment successful: TXN-12345",
+          "level": "INFO",
+          "timestamp": "2025-12-23 10:29:15",
+          "requestId": "REQ-c2d4e6f8a0b12",
+          "environment": "production"
+        },
+        {
+          "lineNumber": 19,
+          "content": "[2025-12-23 10:29:15] production.INFO: REQ-c2d4e6f8a0b12 __________________ END ___________________",
+          "level": "INFO",
+          "timestamp": "2025-12-23 10:29:15",
+          "requestId": "REQ-c2d4e6f8a0b12",
+          "environment": "production"
+        }
+      ],
+      "startTime": "2025-12-23 10:29:10",
+      "endTime": "2025-12-23 10:29:15",
+      "durationMs": 5000,
+      "hasErrors": true,
+      "hasWarnings": true,
+      "environment": "production"
+    },
+    {
+      "requestId": "REQ-8f3b21a4d5c67",
+      "entries": [
+        {
+          "lineNumber": 6,
+          "content": "[2025-12-23 10:29:05] production.INFO: REQ-8f3b21a4d5c67 __________________ START ___________________",
+          "level": "INFO",
+          "timestamp": "2025-12-23 10:29:05",
+          "requestId": "REQ-8f3b21a4d5c67",
+          "environment": "production"
+        },
+        {
+          "lineNumber": 7,
+          "content": "[2025-12-23 10:29:05] production.INFO: REQ-8f3b21a4d5c67 Request URL: /api/orders/create",
+          "level": "INFO",
+          "timestamp": "2025-12-23 10:29:05",
+          "requestId": "REQ-8f3b21a4d5c67",
+          "environment": "production"
+        },
+        {
+          "lineNumber": 8,
+          "content": "[2025-12-23 10:29:05] production.DEBUG: REQ-8f3b21a4d5c67 Validating order data",
+          "level": "DEBUG",
+          "timestamp": "2025-12-23 10:29:05",
+          "requestId": "REQ-8f3b21a4d5c67",
+          "environment": "production"
+        },
+        {
+          "lineNumber": 9,
+          "content": "[2025-12-23 10:29:06] production.WARN: REQ-8f3b21a4d5c67 Product stock low: product_456",
+          "level": "WARN",
+          "timestamp": "2025-12-23 10:29:06",
+          "requestId": "REQ-8f3b21a4d5c67",
+          "environment": "production"
+        },
+        {
+          "lineNumber": 10,
+          "content": "[2025-12-23 10:29:06] production.INFO: REQ-8f3b21a4d5c67 Order created: ORD-789",
+          "level": "INFO",
+          "timestamp": "2025-12-23 10:29:06",
+          "requestId": "REQ-8f3b21a4d5c67",
+          "environment": "production"
+        },
+        {
+          "lineNumber": 11,
+          "content": "[2025-12-23 10:29:06] production.INFO: REQ-8f3b21a4d5c67 __________________ END ___________________",
+          "level": "INFO",
+          "timestamp": "2025-12-23 10:29:06",
+          "requestId": "REQ-8f3b21a4d5c67",
+          "environment": "production"
+        }
+      ],
+      "startTime": "2025-12-23 10:29:05",
+      "endTime": "2025-12-23 10:29:06",
+      "durationMs": 1000,
+      "hasErrors": false,
+      "hasWarnings": true,
+      "environment": "production"
+    },
+    {
+      "requestId": "REQ-694a52cccb223",
+      "entries": [
+        {
+          "lineNumber": 1,
+          "content": "[2025-12-23 10:29:00] production.INFO: REQ-694a52cccb223 __________________ START ___________________  ",
+          "level": "INFO",
+          "timestamp": "2025-12-23 10:29:00",
+          "requestId": "REQ-694a52cccb223",
+          "environment": "production"
+        },
+        {
+          "lineNumber": 2,
+          "content": "[2025-12-23 10:29:00] production.INFO: REQ-694a52cccb223 Request URL: /api/users/123",
+          "level": "INFO",
+          "timestamp": "2025-12-23 10:29:00",
+          "requestId": "REQ-694a52cccb223",
+          "environment": "production"
+        },
+        {
+          "lineNumber": 3,
+          "content": "[2025-12-23 10:29:00] production.DEBUG: REQ-694a52cccb223 Database query: SELECT * FROM users WHERE id = 123",
+          "level": "DEBUG",
+          "timestamp": "2025-12-23 10:29:00",
+          "requestId": "REQ-694a52cccb223",
+          "environment": "production"
+        },
+        {
+          "lineNumber": 4,
+          "content": "[2025-12-23 10:29:01] production.INFO: REQ-694a52cccb223 User found: john.doe@example.com",
+          "level": "INFO",
+          "timestamp": "2025-12-23 10:29:01",
+          "requestId": "REQ-694a52cccb223",
+          "environment": "production"
+        },
+        {
+          "lineNumber": 5,
+          "content": "[2025-12-23 10:29:01] production.INFO: REQ-694a52cccb223 __________________ END ___________________",
+          "level": "INFO",
+          "timestamp": "2025-12-23 10:29:01",
+          "requestId": "REQ-694a52cccb223",
+          "environment": "production"
+        }
+      ],
+      "startTime": "2025-12-23 10:29:00",
+      "endTime": "2025-12-23 10:29:01",
+      "durationMs": 1000,
+      "hasErrors": false,
+      "hasWarnings": false,
+      "environment": "production"
+    }
+  ]
+}
